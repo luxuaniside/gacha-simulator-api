@@ -28,3 +28,6 @@ dist/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# VS code
+.vscode/

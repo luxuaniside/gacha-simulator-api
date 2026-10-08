@@ -61,7 +61,7 @@ def validate_goal(request: GoalValidationRequest, allow_existing_goal_uuid: bool
     if new_goal.goal_banner is None:
         raise APIException(
             code="goal_banner_missing",
-            message="No banner selected. Create one with the item in the Banners tab or use the Create Banner button."
+            message="No banner selected. Create one to continue."
         )
 
     if new_goal.item_type == "character":

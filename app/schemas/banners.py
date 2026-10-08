@@ -10,7 +10,7 @@ class CreateBanner(BaseModel):
         default=None,
         min_length=1
     )
-    banner_four_items: list[str] = Field(min_length=1)   
+    banner_four_items: list[str] = Field(min_length=0)   
     item_type: Literal["character", "weapon"]
     banner_uuid: UUID = Field(default_factory=uuid4)
     

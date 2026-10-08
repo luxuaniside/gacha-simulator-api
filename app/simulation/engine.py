@@ -158,7 +158,6 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
     return simulation_results
 
 def iteration_results(iteration_state: WishState):
-    from app.utilities.english_to_good import english_to_good
     results = {}
     
     for goal in iteration_state.goals:
@@ -169,8 +168,7 @@ def iteration_results(iteration_state: WishState):
         else:
             inventory = iteration_state.weapons[goal.item_rarity] 
 
-        goal_item_name = english_to_good(goal.item_name)
-        current_copies = inventory.get(goal_item_name, -1)
+        current_copies = inventory.get(goal.item_name, -1)
         if current_copies >= goal.item_target_count:
             fulfilled = True
 
