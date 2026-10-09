@@ -1,9 +1,11 @@
 from copy import deepcopy
+from collections.abc import Callable
 import random
 import logging
 import time
 
 from app.models.iteration_state import WishState
+from app.models.goals_state import Goal
 from app.models.simulation_results import SimulationResults, FinalSimulationResults
 from app.models.simulation_settings import SimulationSettings, DebugState
 
@@ -13,12 +15,33 @@ from app.services.goal_services import get_current_goal
 
 logger = logging.getLogger(__name__)
 
-def run_simulation(initialized_iteration_state: WishState, simulation_results: SimulationResults, simulation_settings: SimulationSettings, debug_state: DebugState):
+def record_goal_wishes(
+    iteration_state: WishState,
+    previous_goal: Goal,
+    current_goal: Goal,
+    all_goals_finished: bool,
+) -> None:
+    if previous_goal != current_goal or all_goals_finished:
+        iteration_state.wishes_spent_in_goal[previous_goal.goal_name] = (
+            iteration_state.wishes_used_for_goal_counter
+        )
+        if previous_goal != current_goal:
+            iteration_state.wishes_used_for_goal_counter = 0
+
+
+def run_simulation(
+    initialized_iteration_state: WishState,
+    simulation_results: SimulationResults,
+    simulation_settings: SimulationSettings,
+    debug_state: DebugState,
+    progress_callback: Callable[[int, int], None] | None = None,
+):
     simulation_start = time.time()
     goal_results = {}
     state_collection_wishes_spent_in_goal = []
 
     total_iterations = simulation_settings.iterations
+    progress_interval = max(1, (total_iterations + 99) // 100)
 
     for iteration in range(total_iterations):
         iteration_state = deepcopy(initialized_iteration_state)
@@ -30,6 +53,13 @@ def run_simulation(initialized_iteration_state: WishState, simulation_results: S
             goal_results[goal] = goal_results.get(goal, 0) + val
 
         state_collection_wishes_spent_in_goal.append(iteration_state.wishes_spent_in_goal)
+
+        completed_iterations = iteration + 1
+        if progress_callback and (
+            completed_iterations % progress_interval == 0
+            or completed_iterations == total_iterations
+        ):
+            progress_callback(completed_iterations, total_iterations)
 
     
     
@@ -101,10 +131,12 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
             old_goal = goal
             goal, all_goals_finished = get_current_goal(iteration_state, debug_state) #Tuple (Goal, Bool
 
-            if old_goal != goal or all_goals_finished:
-                iteration_state.wishes_spent_in_goal[old_goal.goal_name] = (
-                    iteration_state.wishes_used_for_goal_counter
-                )
+            record_goal_wishes(
+                iteration_state,
+                old_goal,
+                goal,
+                all_goals_finished,
+            )
             if goal.item_type == "character":
                 iteration_state.five_character_pity = 0
             elif goal.item_type == "weapon":
@@ -122,10 +154,12 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
             old_goal = goal
             goal, all_goals_finished = get_current_goal(iteration_state, debug_state) #Tuple (Goal, Bool
 
-            if old_goal != goal or all_goals_finished:
-                iteration_state.wishes_spent_in_goal[old_goal.goal_name] = (
-                    iteration_state.wishes_used_for_goal_counter
-                )
+            record_goal_wishes(
+                iteration_state,
+                old_goal,
+                goal,
+                all_goals_finished,
+            )
                         
             
             if goal.item_type == "character":

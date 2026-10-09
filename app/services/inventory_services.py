@@ -64,6 +64,16 @@ LIMITED_FOUR_STAR_CHARACTER_LIST = [
     "Valeriy",
 ]
 
+STANDARD_FIVE_STAR_CHARACTER_LIST = [
+    "Jean",
+    "Diluc",
+    "Qiqi",
+    "Mona",
+    "Keqing",
+    "Tighnari",
+    "Dehya",
+    "Yumemizuki Mizuki"
+]
 STANDARD_FOUR_STAR_CHARACTER_LIST = [
     "Amber",
     "Kaeya",
