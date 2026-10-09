@@ -11,81 +11,6 @@ from app.services.probability_services import capturing_radiance
 
 logger = logging.getLogger(__name__)
 
-LIMITED_FIVE_STAR_CHARACTER_LIST = [
-    "Venti",
-    "Klee",
-    "Tartaglia",
-    "Zhongli",
-    "Albedo",
-    "Ganyu",
-    "Xiao",
-    "Hu Tao",
-    "Eula",
-    "Kaedehara Kazuha",
-    "Kamisato Ayaka",
-    "Yoimiya",
-    "Raiden Shogun",
-    "Sangonomiya Kokomi",
-    "Shenhe",
-    "Yae Miko",
-    "Kamisato Ayato",
-    "Yelan",
-    "Cyno",
-    "Nilou",
-    "Nahida",
-    "Wanderer",
-    "Alhaitham",
-    "Baizhu",
-    "Lyney",
-    "Neuvillette",
-    "Wriothesley",
-    "Furina",
-    "Navia",
-    "Xianyun",
-    "Chiori",
-    "Arlecchino",
-    "Clorinde",
-    "Sigewinne",
-    "Emilie",
-    "Mualani",
-    "Kinich",
-    "Xilonen",
-    "Chasca",
-    "Citlali",
-    "Mavuika",
-    "Escoffier",
-    "Skirk",
-    "Ineffa",
-    "Lauma",
-    "Flins",
-    "Nefer",
-    "Durin",
-    "Columbina",
-    "Zibai",
-    "Varka",
-    "Linnea",
-    "Nicole",
-    "Lohen",
-    "Sandrone",
-    "Odette",
-    "Vesna",
-    "Vodyanitsa",
-    "Mitya",
-    "Anastasya", 
-    "Danica",
-    "Noy"
-]
-
-STANDARD_FIVE_STAR_CHARACTER_LIST = [
-    "Mona",
-    "Diluc",
-    "Jean",
-    "Keqing",
-    "Qiqi",
-    "Tighnari",
-    "Dehya",
-    "Yumemizuki Mizuki"
-]
 
 LIMITED_FOUR_STAR_CHARACTER_LIST = [
     "Sucrose",
@@ -144,71 +69,6 @@ STANDARD_FOUR_STAR_CHARACTER_LIST = [
     "Kaeya",
     "Lisa"
 ]
-
-LIMITED_FIVE_STAR_WEAPON_LIST = [
-    "Freedom-Sworn",
-    "Summit Shaper",
-    "Primordial Jade Cutter",
-    "Mistsplitter Reforged",
-    "Haran Geppaku Futsu",
-    "Key of Khaj-Nisut",
-    "Light of Foliar Incision",
-    "Splendor of Tranquil Waters",
-    "Uraku Misugiri",
-    "Absolution",
-    "Peak Patrol Song",
-    "Azurelight",
-    "Athame Artis",
-    "Lightbearing Moonshard",
-    "Song of Broken Pines",
-    "The Unforged",
-    "Redhorn Stonethresher",
-    "Beacon of the Reed Sea",
-    "Verdict",
-    "Fang of the Mountain King",
-    "A Thousand Blazing Suns",
-    "Gest of the Mighty Wolf",
-    "A Teaspoon of Transcendence"
-    "Staff of Homa",
-    "Vortex Vanquisher",
-    "Calamity Queller",
-    "Engulfing Lightning",
-    "Staff of the Scarlet Sands",
-    "Crimson Moon's Semblance",
-    "Lumidouce Elegy",
-    "Symphonist of Scents",
-    "Fractured Halo",
-    "Bloodsoaked Ruins",
-    "Disaster and Remorse",
-    "Memory of Dust",
-    "Jadefall's Splendor",
-    "Everlasting Moonglow",
-    "Kagura's Verity",
-    "A Thousand Floating Dreams",
-    "Tulaytullah's Remembrance",
-    "Cashflow Supervision",
-    "Tome of the Eternal Flow",
-    "Crane's Echoing Call",
-    "Surf's Up",
-    "Starcaller's Watch",
-    "Sunny Morning Sleep-In",
-    "Vivid Notions",
-    "Nightweaver's Looking Glass",
-    "Reliquary of Truth",
-    "Nocturne's Curtain Call",
-    "Angelos' Heptades",
-    "Elegy for the End",
-    "Polar Star",
-    "Aqua Simulacra",
-    "Thundering Pulse",
-    "Hunter's Path",
-    "The First Great Magic",
-    "Silvershower Heartstrings",
-    "Astral Vulture's Crimson Plumage",
-    "The Daybreak Chronicles",
-    "Golden Frostbound Oath"
-]
-
 STANDARD_FIVE_STAR_WEAPON_LIST = [
     "Aquila Favonia",
     "Skyward Blade",
@@ -219,51 +79,6 @@ STANDARD_FIVE_STAR_WEAPON_LIST = [
     "Lost Prayer to the Sacred Winds",
     "Skyward Harp",
     "Amos' Bow"
-]
-
-LIMITED_FOUR_STAR_WEAPON_LIST = [
-    "Favonius Sword",
-    "The Flute",
-    "Sacrificial Sword",
-    "Lion's Roar",
-    "The Alley Flash",
-    "Xiphos' Moonlight",
-    "The Dockhand's Assistant",
-    "Sturdy Bone",
-    "Moonweaver's Dawn",
-    "Favonius Greatsword",
-    "The Bell",
-    "Sacrificial Greatsword",
-    "Rainslasher",
-    "Lithic Blade",
-    "Makhaira Aquamarine",
-    "Akoumaru",
-    "Portable Power Saw",
-    "Fruitfool Hook",
-    "Dragon's Bane",
-    "Lithic Spear",
-    "Favonius Lance",
-    "Wavebreaker's Fin",
-    "Protector's Drill",
-    "Mountain-Bracing Bolt",
-    "Sacrificer's Staff",
-    "Favonius Codex",
-    "The Widsith",
-    "Sacrificial Fragments",
-    "Eye of Perception",
-    "Wine and Song",
-    "Wandering Evenstar",
-    "Waveriding Whirl",
-    "Dawning Frost",
-    "Favonius Warbow",
-    "The Stringless",
-    "Sacrificial Bow",
-    "Rust",
-    "Alley Hunter",
-    "Mitternachts Waltz",
-    "Mouun's Moon",
-    "Range Gauge",
-    "Flower-Wreathed Flowers",
 ]
 
 STANDARD_FOUR_STAR_WEAPON_LIST = [
@@ -287,16 +102,6 @@ STANDARD_FOUR_STAR_WEAPON_LIST = [
     "The Widsith" 
 ]
 
-ALL_ITEMS = set()
-
-ALL_ITEMS.update(LIMITED_FIVE_STAR_CHARACTER_LIST)
-ALL_ITEMS.update(STANDARD_FIVE_STAR_CHARACTER_LIST)
-ALL_ITEMS.update(LIMITED_FOUR_STAR_CHARACTER_LIST)
-ALL_ITEMS.update(STANDARD_FOUR_STAR_CHARACTER_LIST)
-ALL_ITEMS.update(LIMITED_FIVE_STAR_WEAPON_LIST)
-ALL_ITEMS.update(STANDARD_FIVE_STAR_WEAPON_LIST)
-ALL_ITEMS.update(LIMITED_FOUR_STAR_WEAPON_LIST)
-ALL_ITEMS.update(STANDARD_FOUR_STAR_WEAPON_LIST)
 
 
 def get_item(iteration_state: WishState, simualation_settings: SimulationSettings, simulation_results: SimulationResults, debug_state: DebugState, goal: Goal, dropped_item_rarity):
