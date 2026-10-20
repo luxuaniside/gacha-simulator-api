@@ -38,17 +38,20 @@ async def api_exception_handler(
         status_code=exc.status_code,
         content=APIError(
             code=exc.code,
-            message=exc.message,
+            message=exc,
             details=exc.details,
             status_code=exc.status_code
         ).model_dump(),
     )
+
+    
 
 
 async def validation_exception_handler(
     request: Request,
     exc: Exception,
 ):
+  
     if not isinstance(exc, RequestValidationError):
         raise exc
 

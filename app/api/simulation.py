@@ -6,7 +6,7 @@ from uuid import uuid4
 from fastapi import APIRouter
 from fastapi import BackgroundTasks, HTTPException
 from app.schemas.simulation import SimulationRequest
-from app.services.simulation_services import instance_simulation
+from app.simulation.simulation_instancing import instance_simulation
 
 logger = logging.getLogger(__name__)
 simulation_jobs: dict[str, dict] = {}

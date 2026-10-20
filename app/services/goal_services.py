@@ -2,7 +2,7 @@ from app.errors import APIException
 from app.models.goals_state import Goal
 from app.schemas.goals import GoalValidationRequest
 
-from app.models.iteration_state import WishState
+from app.models.iteration_state import IterationState
 from app.models.simulation_settings import DebugState
 import logging
 
@@ -22,7 +22,7 @@ def automatic_goal_name(item_type, item_target_count, item_name, item_high_prior
 
     return goal_name
 
-def get_current_goal(iteration_state: WishState, debug_state: DebugState) -> tuple[Goal, bool]:
+def get_current_goal(iteration_state: IterationState, debug_state: DebugState) -> tuple[Goal, bool]:
     while iteration_state.current_goal_index < len(iteration_state.goals):
         goal: Goal = iteration_state.goals[iteration_state.current_goal_index]
 

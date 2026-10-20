@@ -4,7 +4,7 @@ import random
 import logging
 import time
 
-from app.models.iteration_state import WishState
+from app.models.iteration_state import IterationState
 from app.models.goals_state import Goal
 from app.models.simulation_results import SimulationResults, FinalSimulationResults
 from app.models.simulation_settings import SimulationSettings, DebugState
@@ -16,7 +16,7 @@ from app.services.goal_services import get_current_goal
 logger = logging.getLogger(__name__)
 
 def record_goal_wishes(
-    iteration_state: WishState,
+    iteration_state: IterationState,
     previous_goal: Goal,
     current_goal: Goal,
     all_goals_finished: bool,
@@ -30,7 +30,7 @@ def record_goal_wishes(
 
 
 def run_simulation(
-    initialized_iteration_state: WishState,
+    initialized_iteration_state: IterationState,
     simulation_results: SimulationResults,
     simulation_settings: SimulationSettings,
     debug_state: DebugState,
@@ -45,7 +45,7 @@ def run_simulation(
 
     for iteration in range(total_iterations):
         iteration_state = deepcopy(initialized_iteration_state)
-
+        
         engine(iteration_state, simulation_results, simulation_settings, debug_state)
         results = iteration_results(iteration_state,)
 
@@ -85,7 +85,7 @@ def run_simulation(
         total_wishes_spent_in_goal=state_collection_wishes_spent_in_goal
     )
 
-def engine(iteration_state: WishState, simulation_results: SimulationResults, simulation_settings: SimulationSettings, debug_state: DebugState):
+def engine(iteration_state: IterationState, simulation_results: SimulationResults, simulation_settings: SimulationSettings, debug_state: DebugState):
  
     goal, all_goals_finished = get_current_goal(iteration_state, debug_state) #Tuple (Goal, Bool)
     
@@ -108,6 +108,7 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
             #logger.debug(f"Loop (THROUGH GOALS IN SIMULATION()) ending: wishes={simulation_state.wishes}, "f"starglitter={simulation_state.starglitter}")
             break
 
+        #REWORK ORDER, why would pity be added before ??????????????
         #Handle pity systems
         if goal.item_type == "character":
             iteration_state.five_character_pity += 1
@@ -123,7 +124,7 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
         
         # Five stars have priority over four stars, if a five star is obtained, a four star will not, regardless of its chance.
         if random.random() < get_chance(iteration_state, simulation_settings, debug_state, goal.item_type, "five", five_pity):
-            item_dropped, item_type = get_item(iteration_state, simulation_settings, simulation_results, debug_state, goal, "five")
+            item_dropped, item_type = get_item(iteration_state, simulation_settings, debug_state, goal, "five")
             process_items(iteration_state, debug_state, item_dropped, item_type, "five")
             process_starglitter(iteration_state, simulation_results, simulation_settings, debug_state, item_dropped, item_type, "five")
 
@@ -146,7 +147,7 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
 
         # Four Stars have higher priority over three stars            
         elif random.random() < get_chance(iteration_state, simulation_settings, debug_state, goal.item_type, "four", four_pity):
-            item_dropped, item_type = get_item(iteration_state, simulation_settings, simulation_results, debug_state, goal, "four")
+            item_dropped, item_type = get_item(iteration_state, simulation_settings, debug_state, goal, "four")
             process_items(iteration_state, debug_state, item_dropped, item_type, "four")
             process_starglitter(iteration_state, simulation_results, simulation_settings, debug_state, item_dropped, item_type, "four")
 
@@ -191,7 +192,7 @@ def engine(iteration_state: WishState, simulation_results: SimulationResults, si
         )
     return simulation_results
 
-def iteration_results(iteration_state: WishState):
+def iteration_results(iteration_state: IterationState):
     results = {}
     
     for goal in iteration_state.goals:
