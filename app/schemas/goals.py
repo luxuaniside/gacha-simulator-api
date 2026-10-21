@@ -11,7 +11,7 @@ class CreateGoal(BaseModel):
     item_type: Literal["character", "weapon"]
     item_rarity: Literal["five", "four"]
     item_target_count: int
-    item_high_priority: bool = True
+    item_high_priority: bool
     goal_uuid: UUID = Field(default_factory=uuid4)
 
 class GoalValidationRequest(BaseModel):
