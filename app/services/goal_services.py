@@ -9,7 +9,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 def automatic_goal_name(item_type: str, item_target_count: int, item_name:str , item_high_priority: bool) -> str:
-    """Creates a goal name if nothing was inputted.
+    """Creates a goal name if none was inputted.
 
     Args:
         item_type (str): Item category. Must be "character" or "weapon".
@@ -89,10 +89,10 @@ def validate_goal(request: GoalValidationRequest, allow_existing_goal_uuid: bool
         allow_existing_goal_uuid (bool, optional): Boolean to toggle whether or not to allow a goal with an already occupied UUID to be validated. Generally used for goal editing, as they will have the same UUID. Defaults to False.
 
     Raises:
-        APIException: When new_goal does not have a banner.
-        APIException: When the item target count is not within the specified range for character.
-        APIException: When the item target count is not within the specified range for weapons.
-        APIException: When there is an attempt to create a goal with a name that currently is occupied.
+        APIException: When new_goal does not have a banner. (400) 
+        APIException: When the item target count is not within the specified range for character. (400)
+        APIException: When the item target count is not within the specified range for weapons. (400)
+        APIException: When there is an attempt to create a goal with a name that currently is occupied. (409)
 
     Returns:
         CreateGoal: Goal Schema.
