@@ -1,7 +1,7 @@
 from app.services.inventory_services import get_item, STANDARD_FIVE_STAR_CHARACTER_LIST
 from app.models.iteration_state import IterationState
-from app.models.simulation_settings import SimulationSettings, DebugState
-from app.models.simulation_results import SimulationResults
+from app.models.simulation.simulation_settings import SimulationSettings, DebugState
+from app.models.simulation.simulation_results import SimulationResults
 from app.models.goals_state import Goal
 from app.models.banners_state import Banner
 import pytest

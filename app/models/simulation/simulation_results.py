@@ -17,7 +17,7 @@ class SimulationResults:
     secondary_weapon_from_50_50_lost: int = 0 
 
 @dataclass
-class FinalSimulationResults:
+class SimulationOutput:
     finished_goals: dict
     simulation_time: float
     average_wishes_used: float

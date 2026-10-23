@@ -1,6 +1,6 @@
 from app.services.probability_services import get_chance
 from app.models.iteration_state import IterationState
-from app.models.simulation_settings import SimulationSettings, DebugState
+from app.models.simulation.simulation_settings import SimulationSettings, DebugState
 import pytest
 
 # Defining fixtures for pytest

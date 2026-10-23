@@ -1,8 +1,8 @@
 import logging
 import random
 
-from app.models.simulation_settings import SimulationSettings
-from app.models.simulation_settings import DebugState
+from app.models.simulation.simulation_settings import SimulationSettings
+from app.models.simulation.simulation_settings import DebugState
 from app.models.iteration_state import IterationState
 
 logger = logging.getLogger(__name__)

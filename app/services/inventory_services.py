@@ -2,8 +2,8 @@ import logging
 import random 
 
 from app.models.iteration_state import IterationState
-from app.models.simulation_settings import SimulationSettings, DebugState
-from app.models.simulation_results import SimulationResults
+from app.models.simulation.simulation_settings import SimulationSettings, DebugState
+from app.models.simulation.simulation_results import SimulationResults
 from app.models.goals_state import Goal
 from app.models.banners_state import Banner
 

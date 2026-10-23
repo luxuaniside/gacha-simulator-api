@@ -6,8 +6,8 @@ import time
 
 from app.models.iteration_state import IterationState
 from app.models.goals_state import Goal
-from app.models.simulation_results import SimulationResults, FinalSimulationResults
-from app.models.simulation_settings import SimulationSettings, DebugState
+from app.models.simulation.simulation_results import SimulationResults, SimulationOutput
+from app.models.simulation.simulation_settings import SimulationSettings, DebugState
 
 from app.services.probability_services import get_chance
 from app.services.inventory_services import get_item, process_items, process_starglitter
@@ -36,7 +36,7 @@ def run_simulation(
     debug_state: DebugState,
     progress_callback: Callable[[int, int], None] | None = None,
 ):
-    simulation_start = time.time()
+    simulation_start = time.perf_counter()
     goal_results = {}
     state_collection_wishes_spent_in_goal = []
 
@@ -45,21 +45,21 @@ def run_simulation(
 
     for iteration in range(total_iterations):
         iteration_state = deepcopy(initialized_iteration_state)
-        
         engine(iteration_state, simulation_results, simulation_settings, debug_state)
-        results = iteration_results(iteration_state,)
+  
+        results = iteration_results(iteration_state)
 
         for goal, val in results.items():
             goal_results[goal] = goal_results.get(goal, 0) + val
-
+    
         state_collection_wishes_spent_in_goal.append(iteration_state.wishes_spent_in_goal)
-
         completed_iterations = iteration + 1
         if progress_callback and (
             completed_iterations % progress_interval == 0
             or completed_iterations == total_iterations
         ):
             progress_callback(completed_iterations, total_iterations)
+    
 
     
     
@@ -73,9 +73,9 @@ def run_simulation(
     else: 
         average_masterless_starglitter_refund = 0
     
-    return FinalSimulationResults(
+    return SimulationOutput(
         finished_goals=goal_results,
-        simulation_time=time.time()-simulation_start,
+        simulation_time=time.perf_counter()-simulation_start,
         average_wishes_used=average_wishes_used,
         average_masterless_starglitter_earned=average_masterless_starglitter_earned,
         average_masterless_starglitter_refund=average_masterless_starglitter_refund,

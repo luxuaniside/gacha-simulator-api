@@ -3,7 +3,7 @@ from app.models.goals_state import Goal
 from app.schemas.goals import GoalValidationRequest, CreateGoal
 
 from app.models.iteration_state import IterationState
-from app.models.simulation_settings import DebugState
+from app.models.simulation.simulation_settings import DebugState
 import logging
 
 logger = logging.getLogger(__name__)

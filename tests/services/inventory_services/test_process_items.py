@@ -1,7 +1,7 @@
 from app.services.inventory_services import process_items
 
 from app.models.iteration_state import IterationState
-from app.models.simulation_settings import SimulationSettings, DebugState
+from app.models.simulation.simulation_settings import SimulationSettings, DebugState
 import pytest
 from dataclasses import replace
 

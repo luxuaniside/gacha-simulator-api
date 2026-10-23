@@ -1,0 +1,10 @@
+HIGH PRIORITY
+Rework Engine
+Rework Final Results Collection
+
+LOW PRIORITY
+Ability to have Standard 5* characters as main goals. 
+Would require removing the primary five item in banner from the 5* 
+standard character pool in get_item()
+
+
