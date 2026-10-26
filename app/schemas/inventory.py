@@ -9,15 +9,15 @@ class Resources(BaseModel):
 
 class Pity(BaseModel):
     five_character_pity: int = Field(ge=0, le=90, default=0)
-    four_character_pity: int = Field(ge=0)
+    four_character_pity: int = Field(ge=0, default=0)
     five_weapon_pity: int = Field(ge=0, le=80, default=0)
-    four_weapon_pity: int = Field(ge=0)
+    four_weapon_pity: int = Field(ge=0,default=0)
     five_character_guarantee: bool = Field(default=False)
     four_character_guarantee: bool = Field(default=False)
     five_weapon_guarantee: bool = Field(default=False)
     four_weapon_guarantee: bool = Field(default=False)
-    epitomized_path: Literal[0, 1]
-    capturing_radiance: Literal[0, 1, 2, 3]
+    epitomized_path: Literal[0, 1] = Field(default=0)
+    capturing_radiance: Literal[0, 1, 2, 3] = Field(default=0)
 
 class Characters(BaseModel):
     five: dict[str, int] = Field(default_factory=dict)

@@ -44,11 +44,14 @@ async def api_exception_handler(
         ).model_dump(),
     )
 
+    
+
 
 async def validation_exception_handler(
     request: Request,
     exc: Exception,
 ):
+  
     if not isinstance(exc, RequestValidationError):
         raise exc
 

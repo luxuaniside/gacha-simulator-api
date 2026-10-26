@@ -12,6 +12,9 @@ from app.errors import (
 )
 
 import uvicorn
+import logging
+from datetime import datetime
+from pathlib import Path
 
 
 app = FastAPI()
@@ -45,6 +48,37 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Logging
+LOG_DIR = Path("logs")
+LOG_DIR.mkdir(exist_ok=True)
+
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+log_file = LOG_DIR / f"app_{timestamp}.log"
+
+file_handler = logging.FileHandler(
+    log_file,
+    encoding="utf-8",
+    delay=True,
+)
+
+console_handler = logging.StreamHandler()
+
+formatter = logging.Formatter(
+    "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+)
+
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    handlers=[
+        file_handler,
+        console_handler,
+    ],
+)
+
+logger = logging.getLogger(__name__)
 
 # Routers
 app.include_router(banners_router)

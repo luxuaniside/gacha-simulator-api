@@ -30,4 +30,5 @@ dist/
 Thumbs.db
 
 # VS code
-.vscode/
+.vscode
+logs/
