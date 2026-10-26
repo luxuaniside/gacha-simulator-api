@@ -14,8 +14,7 @@ class Goal:
         item_type (Literal["character", "weapon"]): Type of item to obtain.
         item_rarity (Literal["five", "four"]): Rarity of the target item.
         item_target_count (int): Number of copies to obtain to complete the goal.
-        item_high_priority (bool): Whether the goal has high priority during
-            simulation.
+        item_high_priority (bool): Whether or not the item is attempted to pull for, or simply tracked.
         goal_uuid (uuid.UUID): Unique identifier generated automatically
             when the goal is created.
     """

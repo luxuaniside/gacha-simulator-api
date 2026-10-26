@@ -6,7 +6,7 @@ class SimulationSettings:
     # runtime / control
     iterations: int
     starglitter_refund: bool
-    continue_after_goals_are_finished: bool 
+    continue_after_goals_are_finished: bool = False
     simulation_timeout_seconds: int = 120 #Unused
 
     # probabilities of dropping an item

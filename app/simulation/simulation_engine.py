@@ -12,6 +12,7 @@ from app.models.simulation.simulation_settings import SimulationSettings, DebugS
 from app.services.probability_services import get_chance
 from app.services.inventory_services import get_item, process_items, process_starglitter
 from app.services.goal_services import get_current_goal
+from app.services.result_services import average_wishes_per_goal
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +82,9 @@ def run_simulation(
         average_masterless_fortuna_earned=average_masterless_fortuna_earned,
         average_masterless_stardust_earned=average_masterless_stardust_earned,
         starting_wishes=initialized_iteration_state.intertwined_fates,
-        total_wishes_spent_in_goal=state_collection_wishes_spent_in_goal
+        average_wishes_per_goal=average_wishes_per_goal(
+            state_collection_wishes_spent_in_goal
+        )
     )
 
 def engine(iteration_state: IterationState, simulation_results: SimulationResults, simulation_settings: SimulationSettings, debug_state: DebugState):
