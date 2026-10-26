@@ -6,7 +6,6 @@ from time import monotonic
 from concurrent.futures import ThreadPoolExecutor
 
 from app.models.iteration_state import IterationState
-from app.models.goals_state import Goal
 from app.models.simulation.simulation_settings import SimulationSettings, DebugState
 from app.models.simulation.simulation_results import SimulationResults, SimulationOutput
 from app.models.simulation.simulation_job import SimulationJob
@@ -21,22 +20,41 @@ simulation_executor = ThreadPoolExecutor(max_workers=2)
 MAX_JOB_AGE = 3600 # Simulations can live in memory for up to an hour.
 
 def create_simulation_job(request: SimulationRequest) -> SimulationJob:
-    clean_up_old_jobs(simulation_jobs)
-    # First clears old jobs
-   
+    """Creates and schedules a simulation job.
+    
+    Removes expired jobs before storing the new job.
+
+    Args:
+        request (SimulationRequest): Simulation request containing its parameters.
+
+    Returns:
+        job (SimulationJob): The newly created simulation job.
+    """
     job_uuid = uuid4()
     job = SimulationJob(
         job_id=job_uuid,
         status="pending",
         completed_iterations=0,
+        request=request,
         total_iterations=request.simulation_settings.iteration_count)
+    
     with simulation_jobs_lock:
+        # First clears old jobs
+        clean_up_old_jobs(simulation_jobs)
         simulation_jobs[job_uuid] = job
         
     simulation_executor.submit(run_simulation_job, job_uuid, request)
     return job
 
 def get_simulation_job(job_id: UUID) -> SimulationJob:
+    """Returns a simulation based on the ID given. Removes expired jobs before storing the new job.
+
+    Args:
+        job_id (UUID): ID of the simulation job.
+
+    Returns:
+        SimulationJob: Retrieved simulation job.
+    """
     clean_up_old_jobs(simulation_jobs)
     # First clears old jobs
     
@@ -75,10 +93,7 @@ def run_simulation_job(job_id: UUID, request: SimulationRequest) -> None:
                 job.status = "failed"
                 job.error = "The simulation failed."
 
-def instance_simulation(
-    request: SimulationRequest,
-    progress_callback: Callable[[int, int], None] | None = None,
-) -> SimulationOutput:
+def instance_simulation(request: SimulationRequest, progress_callback: Callable[[int, int], None] | None = None, ) -> SimulationOutput:
     simulation_settings = SimulationSettings(
         request.simulation_settings.iteration_count,
         request.simulation_settings.starglitter_refund,
@@ -125,10 +140,10 @@ def instance_simulation(
     )
     return results
 
-def clean_up_old_jobs(job_list: dict[UUID, SimulationJob]):
+def clean_up_old_jobs(job_list: dict[UUID, SimulationJob]) -> None:
     for job_index in list(job_list):
         job = job_list[job_index]
         if job.status == "completed" and monotonic() - job.time_of_job_schedule > MAX_JOB_AGE:
             job_list.pop(job_index)
             
-     
+      

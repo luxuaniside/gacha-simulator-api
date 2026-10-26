@@ -38,7 +38,7 @@ async def api_exception_handler(
         status_code=exc.status_code,
         content=APIError(
             code=exc.code,
-            message=exc,
+            message=exc.message,
             details=exc.details,
             status_code=exc.status_code
         ).model_dump(),

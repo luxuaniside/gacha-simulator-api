@@ -28,7 +28,6 @@ def record_goal_wishes(
         if previous_goal != current_goal:
             iteration_state.wishes_used_for_goal_counter = 0
 
-
 def run_simulation(
     initialized_iteration_state: IterationState,
     simulation_results: SimulationResults,
@@ -128,6 +127,13 @@ def engine(iteration_state: IterationState, simulation_results: SimulationResult
             process_items(iteration_state, debug_state, item_dropped, item_type, "five")
             process_starglitter(iteration_state, simulation_results, simulation_settings, debug_state, item_dropped, item_type, "five")
 
+            if goal.item_type == "character":
+                iteration_state.five_character_pity = 0
+            elif goal.item_type == "weapon":
+                iteration_state.five_weapon_pity = 0
+            else:    
+                raise KeyError("ITEM PASSED TO GET_ITEM() IS NOT character or weapon")               
+            
             # Goal Handling            
             old_goal = goal
             goal, all_goals_finished = get_current_goal(iteration_state, debug_state) #Tuple (Goal, Bool
@@ -138,19 +144,21 @@ def engine(iteration_state: IterationState, simulation_results: SimulationResult
                 goal,
                 all_goals_finished,
             )
-            if goal.item_type == "character":
-                iteration_state.five_character_pity = 0
-            elif goal.item_type == "weapon":
-                iteration_state.five_weapon_pity = 0
-            else:    
-                raise KeyError("ITEM PASSED TO GET_ITEM() IS NOT character or weapon")               
+
 
         # Four Stars have higher priority over three stars            
         elif random.random() < get_chance(iteration_state, simulation_settings, debug_state, goal.item_type, "four", four_pity):
             item_dropped, item_type = get_item(iteration_state, simulation_settings, debug_state, goal, "four")
             process_items(iteration_state, debug_state, item_dropped, item_type, "four")
             process_starglitter(iteration_state, simulation_results, simulation_settings, debug_state, item_dropped, item_type, "four")
-
+           
+            if goal.item_type == "character":
+                iteration_state.four_character_pity = 0
+            elif goal.item_type == "weapon":
+                iteration_state.four_weapon_pity = 0
+            else:    
+                raise KeyError("ITEM PASSED TO GET_ITEM() IS NOT character or weapon")
+            
             # Goal Handling            
             old_goal = goal
             goal, all_goals_finished = get_current_goal(iteration_state, debug_state) #Tuple (Goal, Bool
@@ -163,12 +171,7 @@ def engine(iteration_state: IterationState, simulation_results: SimulationResult
             )
                         
             
-            if goal.item_type == "character":
-                iteration_state.four_character_pity = 0
-            elif goal.item_type == "weapon":
-                iteration_state.four_weapon_pity = 0
-            else:    
-                raise KeyError("ITEM PASSED TO GET_ITEM() IS NOT character or weapon")
+
        
         #Three star obtained
         else:

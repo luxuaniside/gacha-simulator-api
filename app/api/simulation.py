@@ -1,14 +1,11 @@
 import logging
-from threading import Lock
-from time import monotonic
-from uuid import UUID, uuid4
+from uuid import UUID
 from app.models.simulation.simulation_job import SimulationJob
 from app.services.simulation_services import create_simulation_job, get_simulation_job
 
 from fastapi import APIRouter
-from fastapi import BackgroundTasks, HTTPException
+from fastapi import HTTPException
 from app.schemas.simulation import SimulationRequest, SimulationJobResponse
-from app.services.simulation_services import instance_simulation
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +18,6 @@ router = APIRouter(
 @router.post("", response_model=SimulationJobResponse, status_code=202)
 def create_simulation(request: SimulationRequest) -> SimulationJob:
     return create_simulation_job(request)
-
     
 @router.get("/{job_id}", response_model=SimulationJobResponse)
 def get_simulation(job_id: UUID) -> SimulationJob:
