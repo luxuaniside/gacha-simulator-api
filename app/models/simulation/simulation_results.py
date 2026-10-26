@@ -26,4 +26,4 @@ class SimulationOutput:
     average_masterless_fortuna_earned: float
     average_masterless_stardust_earned: float
     starting_wishes: int
-    total_wishes_spent_in_goal: list
+    average_wishes_per_goal: dict[str, float]
