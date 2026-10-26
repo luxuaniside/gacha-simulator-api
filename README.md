@@ -123,8 +123,8 @@ Inventory of characters, to allow for proper starglitter refund.
 ### Simulation
 Simulation endpoints are used to run and to retrieve the progress or result of a simulation job.
 
-**POST /simulation** - Creates and run a simulation. Returns its ID.
-**GET /simulation/{job_id}** - Retrieves an instanced or completed simulation given an ID. 
+- **POST /simulation** - Creates and run a simulation. Returns its ID.
+- **GET /simulation/{job_id}** - Retrieves an instanced or completed simulation given an ID. 
 
 #### Simulation Workflow
 
@@ -134,6 +134,7 @@ Simulation endpoints are used to run and to retrieve the progress or result of a
 - Once the job is completed, retrieve the results from the result field. If the job fails, check the error field.
 
 **Example: Initial response**
+```
 {
   "job_id": "6f5d507b-3292-4225-81e3-0fa3f9258a05",
   "status": "running",
@@ -142,8 +143,10 @@ Simulation endpoints are used to run and to retrieve the progress or result of a
   "result": null,
   "error": null
 }
+```
 
 **Example: Completed response**
+```
 {
   "job_id": "6f5d507b-3292-4225-81e3-0fa3f9258a05",
   "status": "completed",
@@ -166,16 +169,17 @@ Simulation endpoints are used to run and to retrieve the progress or result of a
   },
   "error": null
 }
+```
 ### Goals and Banners
 These endpoints provide operations to create and edit goals and banners, without messing with the simulation workflow.
 They offer a convenient way to create or edit any goal or banner, to get them ready for a simulation request.
 The API does not persist these objects in memory or in a database. They are simply retrieved and can be used in a simulation.
 
-**POST /banners** - Creates a banner
-**POST /banners/edit** - Edits a banner.
+- **POST /banners** - Creates a banner
+- **POST /banners/edit** - Edits a banner.
 
-**POST /goals** - Creates a goal.
-**POST /goals/edit** - Edits a goal. 
+- **POST /goals** - Creates a goal.
+- **POST /goals/edit** - Edits a goal. 
 
 For request schemas and additional details, see the interactive API documentation at /docs.
 
